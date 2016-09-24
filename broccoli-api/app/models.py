@@ -39,11 +39,14 @@ class Student(Model):
 
 class Meal(Model):
 	id = Column(Integer, primary_key=True)
-	student_id = Column(Integer)
+	student_id = Column(Integer, ForeignKey('student.id'))
 	date = Column(Date)
-	meal_type_id = Column(Integer)
-	meal_location_id = Column(Integer)
-	meal_setting_id = Column(Integer)
+	meal_type_id = Column(Integer, ForeignKey('meal_type.id'))
+	meal_type = relationship('MealType')
+	meal_location_id = Column(Integer, ForeignKey('meal_location.id'))
+	meal_location = relationship('MealLocation')
+	meal_setting_id = Column(Integer, ForeignKey('meal_setting.id'))
+	meal_setting = relationship('MealSetting')
 	rating = Column(Double)
 	
 class MealSetting(Model)
@@ -53,7 +56,8 @@ class MealSetting(Model)
 class MealPart(Model)
 	id = Column(Integer, primary_key=True)
 	meal_id = Column(Integer)
-	part_id = Column(part_id)
+	part_id = Column(Integer, ForeignKey('mealPart.id'))
+	part = relationship('MealPart')
 	
 class MealType(Model)
 	id = Column(Integer, primary_key=True)
