@@ -10,4 +10,12 @@ AuditMixin will add automatic timestamp of created and modified by who
 
 
 """
-        
+
+class Meal(Model):
+	id = Column(Integer, primary_key=True)
+	student_id = Column(Integer)
+	date = Column(Date)
+	meal_type_id = Column(Integer)
+	meal_location_id = Column(Integer)
+	meal_setting_id = Column(Integer)
+	rating = Column(Double)
