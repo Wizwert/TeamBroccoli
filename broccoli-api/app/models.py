@@ -1,4 +1,3 @@
-
 from flask import url_for
 from flask.ext.appbuilder import Model
 from flask.ext.appbuilder.models.mixins import AuditMixin, FileColumn, ImageColumn
@@ -72,6 +71,9 @@ class MealType(Model):
     id = Column(Integer, primary_key=True)
     description = Column(String(400))
 
+    def __repr__(self):
+        return "{}".format(self.description)
+
 
 class MealLocation(Model):
     id = Column(Integer, primary_key=True)
@@ -100,9 +102,3 @@ class Meal(Model):
 
     def __repr__(self):
         return "{student} {date} {meal_type}".format(self.student, self.date, self.meal_type)
-
-
-# mealpart_2_meal = Table('mealpart_meal', Model.metadata,
-#     Column('id', Integer, primary_key=True),
-#     Column('meal_id', Integer, ForeignKey('meal.id')),
-#     Column('part_id', Integer, ForeignKey('MealPart.id')))

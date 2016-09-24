@@ -94,6 +94,15 @@ appbuilder.add_view(ClassroomModelView, "List Classes",icon = "fa-folder-open-o"
                 category_icon = "fa-envelope")
 
 
+class MealModelView(ModelView):
+    datamodel = SQLAInterface(Meal)
+
+    list_columns = ['student.first_name','student.last_name','date','meal_type.description']
+
+appbuilder.add_view(MealModelView, "List Meals", icon="fa-folder-open-o",category = "Meals", category_icon = "healthy-food-icon")
+
+
+
 class MealSettingView(ModelView):
     datamodel = SQLAInterface(MealSetting)
 
