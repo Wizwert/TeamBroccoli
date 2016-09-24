@@ -1,8 +1,10 @@
+
 {% extends "appbuilder/base.html" %}
 {% block content %}
 <div class="jumbotron">
   <div class="container">
     <h1>{{_("Broccoli Data")}}</h1>
+    <img src="{{url_for('static',filename='img/broccoli_westolethis.svg')}}" />
   </div>
 </div>
 
@@ -10,4 +12,14 @@
 	What can you do with this app?
 </p>
 
+<p class="tab"> This app can be used to answer important questions related to childhood
+<p class="tab"> food insecurity at school such as:
+<p class="tab"> 1. How can I make healthy eating enjoyable?
+<p class="tab"> 2. How do I eliminate social pressures that cause children receiving free lunch to skip meals?
+<p class="tab"> 3. How do I hold children and parents accountable for children's eating habits at school?
+
+<p> Data from this application can be used to inform parents, teachers, public entities, and researchers
+about children's eating habits during the school day - something that has been difficult to
+quantify in the past.
+<p>
 {% endblock %}
