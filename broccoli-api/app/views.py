@@ -90,22 +90,6 @@ appbuilder.add_view(ClassroomModelView, "List Classes",icon = "fa-folder-open-o"
                 category_icon = "fa-envelope")
 
 
-
-class EventModelView(ModelView):
-    datamodel = SQLAInterface(Event)
-
-    # label_columns = {'classroom':'Classroom'}
-    list_columns = ['id','data']
-
-    show_fieldsets = [
-        ('Summary',{'fields':['id', 'last_name']}),
-        ('Data',{'fields':['data'],'expanded':False}),
-    ]
-
-appbuilder.add_view(EventModelView, "List Events",icon = "fa-folder-open-o",category = "Events",
-                category_icon = "fa-envelope")
-
-
 class MealSettingView(ModelView):
     datamodel = SQLAInterface(MealSetting)
 
