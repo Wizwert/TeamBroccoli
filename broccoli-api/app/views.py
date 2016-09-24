@@ -1,15 +1,15 @@
 
-#	Stdlib
+#   Stdlib
 import json
 
-#	3rd party
+#   3rd party
 from flask import render_template
 from flask_appbuilder.models.sqla.interface import SQLAInterface
 from flask_appbuilder import ModelView, AppBuilder, expose, BaseView
 
-#	Custom project
+#   Custom project
 from app import appbuilder, db
-from app.models import Classroom, Student, Event
+from app.models import Classroom, Student, Event, MealSetting, MealType, MealLocation, MealPart
 
 """
     Create your Views::
@@ -41,12 +41,12 @@ class APIView(BaseView):
 
     @expose('/v1/list_meals')
     def list(self, **params):
-    	meals = []
-    	doc = {
-    		'message': 'Meals for {}'.format('today'),
-    		'meals': meals,
-    		'misc': params
-    	}
+        meals = []
+        doc = {
+            'message': 'Meals for {}'.format('today'),
+            'meals': meals,
+            'misc': params
+        }
         doc_str = json.dumps(doc)
         return doc_str
 
@@ -55,9 +55,9 @@ class APIView(BaseView):
         # do something with id
         # and render it
         doc = {
-        	'id': id,
-        	'message': 'Added a meal',
-        	'misc': params
+            'id': id,
+            'message': 'Added a meal',
+            'misc': params
         }
         doc_str = json.dumps(doc)
         return doc_str
@@ -102,7 +102,58 @@ class EventModelView(ModelView):
         ('Data',{'fields':['data'],'expanded':False}),
     ]
 
-appbuilder.add_view(EventModelView, "List Classes",icon = "fa-folder-open-o",category = "Events",
+appbuilder.add_view(EventModelView, "List Events",icon = "fa-folder-open-o",category = "Events",
                 category_icon = "fa-envelope")
 
 
+class MealSettingView(ModelView):
+    datamodel = SQLAInterface(MealSetting)
+
+    list_columns = ['id', 'description']
+
+    show_fieldsets = [
+        ('Summary', {'fields': ['id', 'description']})
+    ]
+
+appbuilder.add_view(MealSettingView, "List Settings", icon="fa-folder-open-o", category="Meals",
+                category_icon = "healthy-food-icon")
+
+
+
+class MealTypeView(ModelView):
+    datamodel = SQLAInterface(MealType)
+
+    list_columns = ['id', 'description']
+
+    show_fieldsets = [
+        ('Summary', {'fields': ['id', 'description']})
+    ]
+
+appbuilder.add_view(MealTypeView, "List Types",icon = "fa-folder-open-o",category = "Meals",
+                category_icon = "healthy-food-icon")
+
+
+class MealLocationView(ModelView):
+    datamodel = SQLAInterface(MealLocation)
+
+    list_columns = ['id', 'description']
+
+    show_fieldsets = [
+        ('Summary', {'fields': ['id', 'description']})
+    ]
+
+appbuilder.add_view(MealLocationView, "List Locations",icon = "fa-folder-open-o",category = "Meals",
+                category_icon = "healthy-food-icon")
+
+
+class MealPartView(ModelView):
+    datamodel = SQLAInterface(MealPart)
+
+    list_columns = ['id', 'description']
+
+    show_fieldsets = [
+        ('Summary', {'fields': ['id', 'description']})
+    ]
+
+appbuilder.add_view(MealPartView, "List Parts",icon = "fa-folder-open-o",category = "Meals",
+                category_icon = "healthy-food-icon")
