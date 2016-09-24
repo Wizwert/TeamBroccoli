@@ -1,6 +1,13 @@
+
+#	Stdlib
 import logging
+
+#	3rd party
 from flask import Flask
 from flask.ext.appbuilder import SQLA, AppBuilder
+
+#	Custom
+from app.index import MyIndexView
 
 """
  Logging configuration
@@ -13,6 +20,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 db = SQLA(app)
 appbuilder = AppBuilder(app, db.session)
+# appbuilder = AppBuilder(app, db.session, indexview=MyIndexView)
 
 
 """
@@ -26,7 +34,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute("PRAGMA foreign_keys=ON")
     cursor.close()
-"""    
+"""
 
 from app import views
 
