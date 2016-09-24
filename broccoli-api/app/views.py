@@ -9,6 +9,7 @@ from flask_appbuilder import ModelView, AppBuilder, expose, BaseView
 
 #	Custom project
 from app import appbuilder, db
+from app.models import Classroom, Student, Event
 
 """
     Create your Views::
@@ -36,9 +37,9 @@ db.create_all()
 
 
 class APIView(BaseView):
-    route_base = "/api"
+    route_base = "/data/api"
 
-    @expose('/list_meals')
+    @expose('/v1/list_meals')
     def list(self, **params):
     	meals = []
     	doc = {
@@ -49,7 +50,7 @@ class APIView(BaseView):
         doc_str = json.dumps(doc)
         return doc_str
 
-    @expose('/add_meal/<string:id>')
+    @expose('/v1/add_meal/<string:id>')
     def add_meal(self, id, **params):
         # do something with id
         # and render it
@@ -63,3 +64,45 @@ class APIView(BaseView):
 
 
 appbuilder.add_view_no_menu(APIView())
+
+
+
+class StudentModelView(ModelView):
+    datamodel = SQLAInterface(Student)
+
+    label_columns = {'classroom':'Classroom'}
+    list_columns = ['first_name','last_name']
+
+    show_fieldsets = [
+        ('Summary',{'fields':['first_name', 'last_name']}),
+        # ('Personal Info',{'fields':['birthday','personal_phone','personal_celphone'],'expanded':False}),
+        ]
+
+appbuilder.add_view(StudentModelView, "List Students",icon = "fa-envelope",category = "Students")
+
+
+
+class ClassroomModelView(ModelView):
+    datamodel = SQLAInterface(Classroom)
+    related_views = [StudentModelView]
+
+appbuilder.add_view(ClassroomModelView, "List Classes",icon = "fa-folder-open-o",category = "Students",
+                category_icon = "fa-envelope")
+
+
+
+class EventModelView(ModelView):
+    datamodel = SQLAInterface(Event)
+
+    # label_columns = {'classroom':'Classroom'}
+    list_columns = ['id','data']
+
+    show_fieldsets = [
+        ('Summary',{'fields':['id', 'last_name']}),
+        ('Data',{'fields':['data'],'expanded':False}),
+    ]
+
+appbuilder.add_view(EventModelView, "List Classes",icon = "fa-folder-open-o",category = "Events",
+                category_icon = "fa-envelope")
+
+
