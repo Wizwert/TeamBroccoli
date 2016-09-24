@@ -19,6 +19,8 @@ class Event(Model):
     id = Column(Integer, primary_key=True)
     data = Column(Text)
 
+    def __repr__(self):
+        return "{}".format(self.description)
 
 
 class Classroom(Model):
@@ -66,6 +68,9 @@ class MealSetting(Model):
     id = Column(Integer, primary_key=True)
     description = Column(String(400))
 
+    def __repr__(self):
+        return "{}".format(self.description)
+
 
 class MealType(Model):
     id = Column(Integer, primary_key=True)
@@ -79,11 +84,16 @@ class MealLocation(Model):
     id = Column(Integer, primary_key=True)
     description = Column(String(400))
 
+    def __repr__(self):
+        return "{}".format(self.description)
+
 
 class MealPart(Model):
     id = Column(Integer, primary_key=True)
     description = Column(String(400))
 
+    def __repr__(self):
+        return "{}".format(self.description)
 
 
 class Meal(Model):
