@@ -9,7 +9,9 @@ from flask_appbuilder import ModelView, AppBuilder, expose, BaseView
 
 #   Custom project
 from app import appbuilder, db
-from app.models import Classroom, Student, Event, MealSetting, MealType, MealLocation, MealPart
+from app.models import Classroom, Student, Event, MealSetting, MealType, MealLocation, MealPart, Meal
+
+import pdb
 
 """
     Create your Views::
@@ -41,6 +43,8 @@ class APIView(BaseView):
 
     @expose('/v1/list_meals')
     def list(self, **params):
+        meal_model = SQLAInterface(Meal)
+        student_model = SQLAInterface(Student)
         meals = []
         doc = {
             'message': 'Meals for {}'.format('today'),
