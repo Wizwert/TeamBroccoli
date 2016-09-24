@@ -3,7 +3,7 @@ from flask import url_for
 from flask.ext.appbuilder import Model
 from flask.ext.appbuilder.models.mixins import AuditMixin, FileColumn, ImageColumn
 from flask_appbuilder.models.mixins import ImageColumn
-from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, Date, Float, Table
 from sqlalchemy.orm import relationship
 # from flask_appbuilder.models import Markup
 
@@ -63,36 +63,46 @@ class Student(Model):
         return "{} {}".format(self.first_name, self.last_name)
 
 
+class MealSetting(Model):
+    id = Column(Integer, primary_key=True)
+    description = Column(String(400))
+
+
+class MealType(Model):
+    id = Column(Integer, primary_key=True)
+    description = Column(String(400))
+
+
+class MealLocation(Model):
+    id = Column(Integer, primary_key=True)
+    description = Column(String(400))
+
+
+class MealPart(Model):
+    id = Column(Integer, primary_key=True)
+    description = Column(String(400))
+
+
+
 class Meal(Model):
-	id = Column(Integer, primary_key=True)
-	student_id = Column(Integer, ForeignKey('student.id'))
-	date = Column(Date)
-	meal_type_id = Column(Integer, ForeignKey('meal_type.id'))
-	meal_type = relationship('MealType')
-	meal_location_id = Column(Integer, ForeignKey('meal_location.id'))
-	meal_location = relationship('MealLocation')
-	meal_setting_id = Column(Integer, ForeignKey('meal_setting.id'))
-	meal_setting = relationship('MealSetting')
-	rating = Column(Double)
-	
-class MealSetting(Model)
-	id = Column(Integer, primary_key=True)
-	description = Column(String(400)
-	
-class MealPart(Model)
-	id = Column(Integer, primary_key=True)
-	meal_id = Column(Integer)
-	part_id = Column(Integer, ForeignKey('mealPart.id'))
-	part = relationship('MealPart')
-	
-class MealType(Model)
-	id = Column(Integer, primary_key=True)
-	description = Column(String(400))
-	
-class MealLocation(Model)
-	id = Column(Integer, primary_key=True)
-	description = Column(String(400))
-	
-class MealPart(Model)
-	id = Column(Integer, primary_key=True)
-	description = Column(String(400))
+    id = Column(Integer, primary_key=True)
+    student_id = Column(Integer, ForeignKey('student.id'))
+    student = relationship('Student')
+    date = Column(Date)
+    meal_type_id = Column(Integer, ForeignKey('meal_type.id'))
+    meal_type = relationship('MealType')
+    meal_location_id = Column(Integer, ForeignKey('meal_location.id'))
+    meal_location = relationship('MealLocation')
+    meal_setting_id = Column(Integer, ForeignKey('meal_setting.id'))
+    meal_setting = relationship('MealSetting')
+    rating = Column(Float)
+    # meal_parts = relationship('MealPart', secondary=mealpart_2_meal, backref='meal')
+
+    def __repr__(self):
+        return "{student} {date} {meal_type}".format(self.student, self.date, self.meal_type)
+
+
+# mealpart_2_meal = Table('mealpart_meal', Model.metadata,
+#     Column('id', Integer, primary_key=True),
+#     Column('meal_id', Integer, ForeignKey('meal.id')),
+#     Column('part_id', Integer, ForeignKey('MealPart.id')))
